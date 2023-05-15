@@ -20,7 +20,7 @@ class OnBordingScreenTwo extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                 child: IconButton(
                   onPressed: () {
-                    ShopCubit.get(context).controller.animateToPage(0, duration: const Duration(seconds: 1), curve: Curves.bounceIn);
+                    ShopCubit.get(context).controller.animateToPage(0, duration: const Duration(milliseconds: 550), curve: Curves.fastOutSlowIn);
                   },
                   icon: const Icon(
                     Icons.arrow_back_ios,
@@ -69,7 +69,7 @@ class OnBordingScreenTwo extends StatelessWidget {
                   elevation: 0.0,
                   backgroundColor: const Color(0xFFF58634),
                   onPressed: () {
-                    ShopCubit.get(context).controller.animateToPage(2, duration: const Duration(seconds: 1), curve: Curves.bounceIn);
+                    ShopCubit.get(context).controller.animateToPage(2, duration: const Duration(milliseconds: 550), curve: Curves.fastOutSlowIn);
                   },
                   child: Icon(
                     Icons.arrow_forward_ios_rounded,

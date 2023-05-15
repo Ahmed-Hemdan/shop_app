@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shop_app/Screens/LoginScreen.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -20,7 +21,7 @@ class OnBordingScreenthree extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                 child: IconButton(
                   onPressed: () {
-                    ShopCubit.get(context).controller.animateToPage(1, duration: const Duration(seconds: 1), curve: Curves.bounceIn);
+                    ShopCubit.get(context).controller.animateToPage(1, duration: const Duration(milliseconds: 550), curve: Curves.fastOutSlowIn);
                   },
                   icon: const Icon(
                     Icons.arrow_back_ios,
@@ -68,7 +69,14 @@ class OnBordingScreenthree extends StatelessWidget {
                 FloatingActionButton(
                   elevation: 0.0,
                   backgroundColor: const Color(0xFFF58634),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
                   child: Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 14.h,

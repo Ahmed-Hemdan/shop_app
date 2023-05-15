@@ -50,7 +50,7 @@ class OnBordingScreenOne extends StatelessWidget {
                   elevation: 0.0,
                   backgroundColor: const Color(0xFFF58634),
                   onPressed: () {
-                    ShopCubit.get(context).controller.animateToPage(1, duration: const Duration(seconds: 1), curve: Curves.bounceIn);
+                    ShopCubit.get(context).controller.animateToPage(1, duration: const Duration(milliseconds: 550), curve: Curves.fastOutSlowIn);
                   },
                   child: Icon(
                     Icons.arrow_forward_ios_rounded,
