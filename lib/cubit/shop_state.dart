@@ -1,19 +1,19 @@
 part of 'shop_cubit.dart';
 
-abstract class ShopState {}
+abstract class ShopStates {}
 
-class ShopInitial extends ShopState {}
+class ShopInitial extends ShopStates {}
 
-class ShowPassword extends ShopState{}
+class ShowPassword extends ShopStates {}
 
-class LoginLoadingState extends ShopState {}
+class LoginLoadingState extends ShopStates {}
 
-class LoginSuccessState extends ShopState {}
+class LoginSuccessState extends ShopStates {}
 
-class LoginErrorState extends ShopState {}
+class LoginErrorState extends ShopStates {}
 
-class RegisterLoadingState extends ShopState {}
+class RegisterLoadingState extends ShopStates {}
 
-class RegisterSuccessState extends ShopState {}
+class RegisterSuccessState extends ShopStates {}
 
-class RegisterErroeState extends ShopState {}
+class RegisterErroeState extends ShopStates {}
