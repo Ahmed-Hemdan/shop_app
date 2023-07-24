@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Models/LoginModel.dart';
+import 'package:shop_app/shared/shared_preferences.dart';
 
 part 'shop_state.dart';
 
@@ -28,14 +31,38 @@ class ShopCubit extends Cubit<ShopStates> {
       email: email,
       password: password,
     ).then((value) {
-      print(value.data.toString());
       loginData = LoginModel.fromJson(value.data);
-      print(loginData!.message);
-      print(loginData!.data!.email);
+
+      print(loginData!.status);
+
+      if (loginData!.status == false) {
+        emit(LoginSuccessState());
+        return Fluttertoast.showToast(
+          msg: "${loginData!.message}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0.sp,
+        );
+      } else {
+        emit(LoginSuccessState());
+        Fluttertoast.showToast(
+          msg: "${loginData!.message}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0.sp,
+        );
+      }
       emit(LoginSuccessState());
     }).catchError((error) {
       print(error.toString());
       emit(LoginErrorState());
+      return null;
     });
   }
 
@@ -59,4 +86,7 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(RegisterErroeState());
     });
   }
+
+  bool onBoarding =false;
+
 }
