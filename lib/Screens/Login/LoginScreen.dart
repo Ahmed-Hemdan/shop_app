@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'cant be impty';
-                          } else if (value.length <= 6) {
+                          } else if (value.length < 6) {
                             return "password is too short";
                           } else {
                             return null;
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         type: TextInputType.text,
                         scure: ShopCubit.get(context).isSecure,
-                        sufIcon: Icons.remove_red_eye_sharp,
+                        sufIcon: ShopCubit.get(context).suficon,
                         sufBut: () => ShopCubit.get(context).showPassword(),
                       );
                     },

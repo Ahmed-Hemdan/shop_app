@@ -108,23 +108,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: emailController,
                     ),
                   ),
-                  defaultTextFormField(
-                    validate: (value) {
-                      if (value!.isEmpty) {
-                        return 'cant be impty';
-                      } else if (value.length <= 6) {
-                        return "password is too short";
-                      } else {
-                        return null;
-                      }
+                  BlocConsumer<ShopCubit, ShopStates>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      return defaultTextFormField(
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return 'cant be impty';
+                          } else if (value.length <= 6) {
+                            return "password is too short";
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: passwordController,
+                        hint: 'Password',
+                        icon: const Icon(
+                          Icons.lock,
+                          color: Colors.grey,
+                        ),
+                        type: TextInputType.visiblePassword,
+                        sufIcon: ShopCubit.get(context).suficon,
+                        sufBut: () => ShopCubit.get(context).showPassword(),
+                      );
                     },
-                    controller: passwordController,
-                    hint: 'Password',
-                    icon: const Icon(
-                      Icons.lock,
-                      color: Colors.grey,
-                    ),
-                    type: TextInputType.visiblePassword,
                   ),
                   SizedBox(
                     height: 20.h,
