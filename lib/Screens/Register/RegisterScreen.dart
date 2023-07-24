@@ -42,6 +42,18 @@ class RegisterScreen extends StatelessWidget {
                       return null;
                     },
                   ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  defaultTextFormField(
+                    controller: ShopCubit.get(context).phoneController,
+                    type: TextInputType.phone,
+                    icon: const Icon(Icons.phone),
+                    hint: 'Phone',
+                    validate: (value) {
+                      return null;
+                    },
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0.h),
                     child: defaultTextFormField(
@@ -83,7 +95,14 @@ class RegisterScreen extends StatelessWidget {
                     height: 20.h,
                   ),
                   defaultButton(
-                    onpressed: () {},
+                    onpressed: () {
+                      ShopCubit.get(context).register(
+                        email: ShopCubit.get(context).emailController.text,
+                        password: ShopCubit.get(context).passwordController.text,
+                        name: ShopCubit.get(context).nameController.text,
+                        phone: ShopCubit.get(context).phoneController.text,
+                      );
+                    },
                     text: "Register",
                   ),
                   Padding(

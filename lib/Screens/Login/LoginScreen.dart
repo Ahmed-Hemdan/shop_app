@@ -83,7 +83,12 @@ class LoginScreen extends StatelessWidget {
                   height: 20.h,
                 ),
                 defaultButton(
-                  onpressed: () {},
+                  onpressed: () {
+                    ShopCubit.get(context).login(
+                      email: ShopCubit.get(context).emailController.text,
+                      password: ShopCubit.get(context).passwordController.text,
+                    );
+                  },
                   text: "Login",
                 ),
                 Padding(
