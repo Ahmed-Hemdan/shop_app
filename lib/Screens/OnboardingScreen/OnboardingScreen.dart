@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shop_app/Components/Components.dart';
+
 import 'package:shop_app/Models/onboardingModel.dart';
 import 'package:shop_app/Screens/Login/LoginScreen.dart';
+import 'package:shop_app/cubit/shop_cubit.dart';
+import 'package:shop_app/shared/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
@@ -37,6 +41,7 @@ class OnboardingScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: TextButton(
               onPressed: () {
+                CacheHelper.setData(value: true, key: 'board');
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
@@ -104,6 +109,7 @@ class OnboardingScreen extends StatelessWidget {
                           curve: Curves.fastLinearToSlowEaseIn,
                         );
                       } else {
+                        CacheHelper.setData(value: true, key: 'board');
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
