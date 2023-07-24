@@ -1,17 +1,14 @@
-import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
 
 part 'shop_state.dart';
 
-class ShopCubit extends Cubit<ShopState> {
+class ShopCubit extends Cubit<ShopStates> {
   ShopCubit() : super(ShopInitial());
   static ShopCubit get(context) => BlocProvider.of(context);
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+
 
   bool isSecure = false;
   showPassword() {

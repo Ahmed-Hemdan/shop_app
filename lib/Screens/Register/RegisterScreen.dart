@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shop_app/Components/Components.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  RegExp emailReg = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  RegExp phoneReg = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +55,36 @@ class RegisterScreen extends StatelessWidget {
                     height: 10.h,
                   ),
                   defaultTextFormField(
-                    controller: ShopCubit.get(context).nameController,
+                    controller: nameController,
                     type: TextInputType.name,
                     icon: const Icon(Icons.person_sharp),
                     hint: 'Name',
                     validate: (value) {
-                      return null;
+                      if (value!.isEmpty) {
+                        return "Your name can't be empty";
+                      } else if (value.length <= 2) {
+                        return "Name is too short ";
+                      } else {
+                        return null;
+                      }
                     },
                   ),
                   SizedBox(
                     height: 15.h,
                   ),
                   defaultTextFormField(
-                    controller: ShopCubit.get(context).phoneController,
+                    controller: phoneController,
                     type: TextInputType.phone,
                     icon: const Icon(Icons.phone),
                     hint: 'Phone',
                     validate: (value) {
-                      return null;
+                      if (value!.isEmpty) {
+                        return "please enter your phone";
+                      } else if (phoneReg.hasMatch(value)) {
+                        return null;
+                      } else {
+                        return "enter a vaild phone number";
+                      }
                     },
                   ),
                   Padding(
@@ -64,26 +97,28 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       type: TextInputType.emailAddress,
                       validate: (value) {
-                        if (value == null) {
+                        if (value!.isEmpty) {
                           return 'cant be impty';
+                        } else if (emailReg.hasMatch(value)) {
+                          return null;
                         } else {
-                          null;
+                          return "enter a vaild email";
                         }
-                        return null;
                       },
-                      controller: ShopCubit.get(context).emailController,
+                      controller: emailController,
                     ),
                   ),
                   defaultTextFormField(
                     validate: (value) {
-                      if (value == null) {
+                      if (value!.isEmpty) {
                         return 'cant be impty';
+                      } else if (value.length <= 6) {
+                        return "password is too short";
                       } else {
-                        null;
+                        return null;
                       }
-                      return null;
                     },
-                    controller: ShopCubit.get(context).passwordController,
+                    controller: passwordController,
                     hint: 'Password',
                     icon: const Icon(
                       Icons.lock,
@@ -94,16 +129,27 @@ class RegisterScreen extends StatelessWidget {
                   SizedBox(
                     height: 20.h,
                   ),
-                  defaultButton(
-                    onpressed: () {
-                      ShopCubit.get(context).register(
-                        email: ShopCubit.get(context).emailController.text,
-                        password: ShopCubit.get(context).passwordController.text,
-                        name: ShopCubit.get(context).nameController.text,
-                        phone: ShopCubit.get(context).phoneController.text,
-                      );
+                  BlocConsumer<ShopCubit, ShopStates>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      if (state is! RegisterLoadingState) {
+                        return defaultButton(
+                          onpressed: () {
+                            ShopCubit.get(context).register(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              name: nameController.text,
+                              phone: phoneController.text,
+                            );
+                          },
+                          text: "Register",
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        );
+                      }
                     },
-                    text: "Register",
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
