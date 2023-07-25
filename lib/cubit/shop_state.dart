@@ -17,3 +17,5 @@ class RegisterLoadingState extends ShopStates {}
 class RegisterSuccessState extends ShopStates {}
 
 class RegisterErroeState extends ShopStates {}
+
+class ChangeNavCurrentIndex extends ShopStates {}

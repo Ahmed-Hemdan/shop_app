@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Global/Global.dart';
+import 'package:shop_app/Screens/Layout/LayoutScreen.dart';
 import 'package:shop_app/Screens/Login/LoginScreen.dart';
 import 'package:shop_app/Screens/OnboardingScreen/OnboardingScreen.dart';
 import 'package:shop_app/cubit/bloc_observer.dart';
@@ -14,14 +15,23 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
-   onboard = CacheHelper.getData(key: 'board') ?? false;
+  onboard = CacheHelper.getData(key: 'board') ?? false;
+  token = CacheHelper.getData(key: "token");
+  if (onboard == true) {
+    if (token != null) {
+      startScreen = const LayoutScreen();
+    } else {
+      startScreen = const LoginScreen();
+    }
+  } else {
+    startScreen = OnboardingScreen();
+  }
 
-  runApp( const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
-  const MyApp( {super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -39,7 +49,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
             useMaterial3: true,
           ),
-          home: onboard ==false ? OnboardingScreen(): const LoginScreen(),
+          home: startScreen,
         ),
       ),
     );

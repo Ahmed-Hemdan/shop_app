@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/Components/Components.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Models/LoginModel.dart';
+import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
+import 'package:shop_app/Screens/Favorites/FavoritesScreen.dart';
+import 'package:shop_app/Screens/Products/ProductsScreen.dart';
+import 'package:shop_app/Screens/Settings/SettingsScreen.dart';
+import 'package:shop_app/shared/shared_preferences.dart';
 
 part 'shop_state.dart';
 
@@ -21,12 +25,12 @@ class ShopCubit extends Cubit<ShopStates> {
 
   LoginModel? loginData;
 
-  void login({
+  Future<void> login({
     required String email,
     required password,
-  }) {
+  }) async {
     emit(LoginLoadingState());
-    DioHelper.signin(
+    await DioHelper.signin(
       email: email,
       password: password,
     ).then((value) {
@@ -36,26 +40,11 @@ class ShopCubit extends Cubit<ShopStates> {
 
       if (loginData!.status == false) {
         emit(LoginSuccessState());
-        return Fluttertoast.showToast(
-          msg: "${loginData!.message}",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0.sp,
-        );
+        return showtoast(text: "${loginData!.message}", color: Colors.red);
       } else {
         emit(LoginSuccessState());
-        Fluttertoast.showToast(
-          msg: "${loginData!.message}",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0.sp,
-        );
+        CacheHelper.setData(key: "token", value: loginData!.data!.token);
+        showtoast(text: "${loginData!.message}", color: Colors.green);
       }
       emit(LoginSuccessState());
     }).catchError((error) {
@@ -86,6 +75,42 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-  bool onBoarding =false;
+  int currentIndex = 0;
+  void changeNavCurrentIndex(int index) {
+    currentIndex = index;
+    emit(ChangeNavCurrentIndex());
+  }
 
+  List<BottomNavigationBarItem> bottomNavItems = const [
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.inventory_2_rounded,
+      ),
+      label: "Products",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.favorite_rounded,
+      ),
+      label: "Favorites",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.category_rounded,
+      ),
+      label: "Categories",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.settings,
+      ),
+      label: "Settings",
+    ),
+  ];
+  List<Widget> screens = const [
+    ProductsScreen(),
+    FavoritesScreen(),
+    CategoriesScreen(),
+    SettingsScreen(),
+  ];
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/Models/onboardingModel.dart';
 
 Widget onboardingWidget(OnboardingModel model) => Column(
@@ -29,7 +30,7 @@ Widget defaultTextFormField({
   required String hint,
   required String? Function(String?) validate,
   void Function()? sufBut,
-  IconData? sufIcon ,
+  IconData? sufIcon,
 }) =>
     SizedBox(
       child: TextFormField(
@@ -77,4 +78,18 @@ Widget defaultButton({
           ),
         ),
       ),
+    );
+
+Future<bool?> showtoast({
+  required String text,
+  required Color color,
+}) =>
+    Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: color,
+      textColor: Colors.white,
+      fontSize: 16.0.sp,
     );
