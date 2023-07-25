@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
-
+import 'package:shop_app/Global/Global.dart';
 import 'package:shop_app/Screens/Login/LoginScreen.dart';
 import 'package:shop_app/Screens/OnboardingScreen/OnboardingScreen.dart';
 import 'package:shop_app/cubit/bloc_observer.dart';
@@ -14,14 +14,14 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
-  bool? board = CacheHelper.getData(key: 'board') ?? false;
-  print(board);
-  runApp( MyApp(board!));
+   onboard = CacheHelper.getData(key: 'board') ?? false;
+
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool onboarding;
-  const MyApp(this.onboarding, {super.key});
+
+  const MyApp( {super.key});
 
   // This widget is the root of your application.
   @override
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
             useMaterial3: true,
           ),
-          home: onboarding ==false ? OnboardingScreen(): const LoginScreen(),
+          home: onboard ==false ? OnboardingScreen(): const LoginScreen(),
         ),
       ),
     );

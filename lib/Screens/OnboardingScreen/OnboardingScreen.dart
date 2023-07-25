@@ -5,7 +5,6 @@ import 'package:shop_app/Components/Components.dart';
 
 import 'package:shop_app/Models/onboardingModel.dart';
 import 'package:shop_app/Screens/Login/LoginScreen.dart';
-import 'package:shop_app/cubit/shop_cubit.dart';
 import 'package:shop_app/shared/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
