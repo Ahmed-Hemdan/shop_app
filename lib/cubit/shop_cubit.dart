@@ -5,7 +5,7 @@ import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Models/LoginModel.dart';
 import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
 import 'package:shop_app/Screens/Favorites/FavoritesScreen.dart';
-import 'package:shop_app/Screens/Products/ProductsScreen.dart';
+import 'package:shop_app/Screens/Home/HomeScreen.dart';
 import 'package:shop_app/Screens/Settings/SettingsScreen.dart';
 import 'package:shop_app/shared/shared_preferences.dart';
 
@@ -84,9 +84,9 @@ class ShopCubit extends Cubit<ShopStates> {
   List<BottomNavigationBarItem> bottomNavItems = const [
     BottomNavigationBarItem(
       icon: Icon(
-        Icons.inventory_2_rounded,
+        Icons.home,
       ),
-      label: "Products",
+      label: "Home",
     ),
     BottomNavigationBarItem(
       icon: Icon(
@@ -108,7 +108,7 @@ class ShopCubit extends Cubit<ShopStates> {
     ),
   ];
   List<Widget> screens = const [
-    ProductsScreen(),
+    HomeScreen(),
     FavoritesScreen(),
     CategoriesScreen(),
     SettingsScreen(),

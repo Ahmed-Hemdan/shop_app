@@ -6,6 +6,7 @@ import 'package:shop_app/Global/Global.dart';
 import 'package:shop_app/Screens/Layout/LayoutScreen.dart';
 import 'package:shop_app/Screens/Login/LoginScreen.dart';
 import 'package:shop_app/Screens/OnboardingScreen/OnboardingScreen.dart';
+import 'package:shop_app/Themes/Themes.dart';
 import 'package:shop_app/cubit/bloc_observer.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
 import 'package:shop_app/shared/shared_preferences.dart';
@@ -45,10 +46,7 @@ class MyApp extends StatelessWidget {
         builder: (context, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-            useMaterial3: true,
-          ),
+          theme: darkTheme,
           home: startScreen,
         ),
       ),

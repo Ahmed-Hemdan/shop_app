@@ -20,8 +20,9 @@ class LayoutScreen extends StatelessWidget {
             },
           ),
           appBar: AppBar(
-            title: const Text(
+            title: Text(
               "Salla",
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           body: ShopCubit.get(context).screens[ShopCubit.get(context).currentIndex],
