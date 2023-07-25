@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shop_app/Components/Components.dart';
+import 'package:shop_app/Screens/Layout/LayoutScreen.dart';
 import 'package:shop_app/Screens/Register/RegisterScreen.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
 
@@ -107,12 +108,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     builder: (context, state) {
                       if (state is! LoginLoadingState) {
                         return defaultButton(
-                          onpressed: () {
+                          onpressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              ShopCubit.get(context).login(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
+                              ShopCubit.get(context)
+                                  .login(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  )
+                                  .then(
+                                    (value) => Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const LayoutScreen(),
+                                      ),
+                                      (route) => false,
+                                    ),
+                                  );
                             }
                           },
                           text: "Login",

@@ -21,7 +21,7 @@ class DioHelper {
     required String email,
     required  password,
   }) async {
-    return dio!.post("login", data: {
+    return await dio!.post("login", data: {
       "email": email,
       "password": password,
     });
