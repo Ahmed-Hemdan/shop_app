@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/Components/Components.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
+import 'package:shop_app/Global/Global.dart';
+import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/LoginModel.dart';
 import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
 import 'package:shop_app/Screens/Favorites/FavoritesScreen.dart';
@@ -17,6 +19,7 @@ class ShopCubit extends Cubit<ShopStates> {
 
   IconData suficon = Icons.remove_red_eye_sharp;
   bool isSecure = false;
+
   showPassword() {
     isSecure = !isSecure;
     isSecure ? suficon = Icons.visibility_off : suficon = Icons.visibility;
@@ -76,6 +79,7 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   int currentIndex = 0;
+
   void changeNavCurrentIndex(int index) {
     currentIndex = index;
     emit(ChangeNavCurrentIndex());
@@ -107,10 +111,21 @@ class ShopCubit extends Cubit<ShopStates> {
       label: "Settings",
     ),
   ];
+
   List<Widget> screens = const [
     HomeScreen(),
     FavoritesScreen(),
     CategoriesScreen(),
     SettingsScreen(),
   ];
+
+  HomeModel? homeData;
+  void getHomeData() async {
+    emit(GetHomeDataLoading());
+    await DioHelper.getData(endPoint: "home", token: token).then((value) {
+      homeData = HomeModel.fromJson(value.data);
+      print(homeData!.data!.banners![0].id);
+      emit(GetHomeDataSuccess());
+    });
+  }
 }

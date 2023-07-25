@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 
 class DioHelper {
@@ -10,16 +8,13 @@ class DioHelper {
       BaseOptions(
         baseUrl: "https://student.valuxapps.com/api/",
         receiveDataWhenStatusError: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
       ),
     );
   }
 
- static Future<Response> signin({
+  static Future<Response> signin({
     required String email,
-    required  password,
+    required password,
   }) async {
     return await dio!.post("login", data: {
       "email": email,
@@ -27,9 +22,9 @@ class DioHelper {
     });
   }
 
-   static Future<Response> signup({
+  static Future<Response> signup({
     required String email,
-    required  password,
+    required password,
     required name,
     required phone,
   }) async {
@@ -39,5 +34,17 @@ class DioHelper {
       "email": email,
       "password": password,
     });
+  }
+
+  static Future<Response> getData({
+    required String endPoint,
+    String? token,
+  }) async {
+    dio!.options.headers = {
+      "Content-Type": "application/json",
+      "lang": "ar",
+      "Authorization": token,
+    };
+    return await dio!.get(endPoint);
   }
 }
