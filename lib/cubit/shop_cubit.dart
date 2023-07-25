@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Models/LoginModel.dart';
-import 'package:shop_app/shared/shared_preferences.dart';
 
 part 'shop_state.dart';
 
