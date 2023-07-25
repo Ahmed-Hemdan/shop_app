@@ -19,3 +19,9 @@ class RegisterSuccessState extends ShopStates {}
 class RegisterErroeState extends ShopStates {}
 
 class ChangeNavCurrentIndex extends ShopStates {}
+
+class GetHomeDataLoading extends ShopStates {}
+
+class GetHomeDataSuccess extends ShopStates {}
+
+class GetHomeDataError extends ShopStates {}

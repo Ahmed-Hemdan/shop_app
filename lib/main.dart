@@ -18,6 +18,7 @@ void main() async {
   await CacheHelper.init();
   onboard = CacheHelper.getData(key: 'board') ?? false;
   token = CacheHelper.getData(key: "token");
+  print(token);
   if (onboard == true) {
     if (token != null) {
       startScreen = const LayoutScreen();
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShopCubit(),
+      create: (context) => ShopCubit()..getHomeData(),
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         builder: (context, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          theme: darkTheme,
+          theme: lightTheme,
           home: startScreen,
         ),
       ),
