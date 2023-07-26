@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class HomeModel {
   bool? status;
   DataHomeModel? data;
@@ -12,8 +14,26 @@ class DataHomeModel {
   List<ProductModel>? products;
   String? ad;
   DataHomeModel.formJson(Map<String, dynamic> json) {
-    banners = json["banners"] != null ? json['banners'].forEach((e)=>banners!.add(e)) : null;
-    products = json['products'] != null ? json['products'].forEach((e)=>products!.add(e)) : null;
+    if (json["banners"] != null) {
+      banners = <BannerModel>[];
+      json["banners"].forEach(
+        (e) => banners!.add(
+          BannerModel.fromJson(e),
+        ),
+      );
+    } else {
+      products = null;
+    }
+    if (json['products'] != null) {
+      products = <ProductModel>[];
+      products = json['products'].forEach(
+        (e) => products!.add(
+          ProductModel.fromJson(e),
+        ),
+      );
+    } else {
+      products = null;
+    }
     ad = json['ad'];
   }
 }
@@ -29,21 +49,22 @@ class BannerModel {
 
 class ProductModel {
   int? id;
-  dynamic price;
-  dynamic oldPrice;
-  dynamic discount;
+  double? price;
+  double? oldPrice;
+  int? discount;
   String? image;
   String? name;
   bool? inFavorites;
   bool? inCart;
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    price = json['price'];
-    oldPrice = json['old_price'];
+    price = json['price'].toDouble();
+    oldPrice = json['old_price'].toDouble();
     discount = json['discount'];
-    image = json['image'];
+    image = json['image'] ?? "";
     name = json['name'];
     inFavorites = json['in_favorites'];
     inCart = json['in_cart'];
   }
 }
+

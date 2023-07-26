@@ -6,9 +6,12 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: "https://student.valuxapps.com/api/",
-        receiveDataWhenStatusError: true,
-      ),
+          baseUrl: "https://student.valuxapps.com/api/",
+          receiveDataWhenStatusError: true,
+          headers: {
+            "Content-Type": "application/json",
+            "lang": "ar",
+          }),
     );
   }
 
@@ -38,13 +41,12 @@ class DioHelper {
 
   static Future<Response> getData({
     required String endPoint,
-    String? token,
   }) async {
     dio!.options.headers = {
       "Content-Type": "application/json",
       "lang": "ar",
-      "Authorization": token,
     };
     return await dio!.get(endPoint);
   }
+
 }

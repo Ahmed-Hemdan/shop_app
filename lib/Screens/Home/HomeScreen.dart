@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shop_app/cubit/shop_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,8 +9,16 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          "Home Screen",
+        child: TextButton(
+          onPressed: () {
+            ShopCubit.get(context).getHomeData();
+          },
+          child: Text(
+            'try',
+            style: TextStyle(
+              fontSize: 20.sp,
+            ),
+          ),
         ),
       ),
     );

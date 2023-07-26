@@ -5,6 +5,7 @@ import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Global/Global.dart';
 import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/LoginModel.dart';
+import 'package:shop_app/Models/wetry.dart';
 import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
 import 'package:shop_app/Screens/Favorites/FavoritesScreen.dart';
 import 'package:shop_app/Screens/Home/HomeScreen.dart';
@@ -120,12 +121,19 @@ class ShopCubit extends Cubit<ShopStates> {
   ];
 
   HomeModel? homeData;
-  void getHomeData() async {
+  void getHomeData() {
     emit(GetHomeDataLoading());
-    await DioHelper.getData(endPoint: "home", token: token).then((value) {
+    print("===========================================================");
+    DioHelper.getData(
+      endPoint: "home",
+    ).then((value) {
       homeData = HomeModel.fromJson(value.data);
-      print(homeData!.data!.banners![0].id);
+      print("The Value of data ================ ${value.data.toString()}");
       emit(GetHomeDataSuccess());
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetHomeDataError());
     });
   }
+
 }
