@@ -18,7 +18,6 @@ void main() async {
   await CacheHelper.init();
   onboard = CacheHelper.getData(key: 'board') ?? false;
   token = CacheHelper.getData(key: "token");
-  print(token);
   if (onboard == true) {
     if (token != null) {
       startScreen = const LayoutScreen();
@@ -47,7 +46,7 @@ class MyApp extends StatelessWidget {
         builder: (context, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          theme: lightTheme,
+          theme: darkTheme,
           home: startScreen,
         ),
       ),
