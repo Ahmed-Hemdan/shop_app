@@ -5,7 +5,6 @@ import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Global/Global.dart';
 import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/LoginModel.dart';
-import 'package:shop_app/Models/wetry.dart';
 import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
 import 'package:shop_app/Screens/Favorites/FavoritesScreen.dart';
 import 'package:shop_app/Screens/Home/HomeScreen.dart';
@@ -40,8 +39,6 @@ class ShopCubit extends Cubit<ShopStates> {
     ).then((value) {
       loginData = LoginModel.fromJson(value.data);
 
-      print(loginData!.status);
-
       if (loginData!.status == false) {
         emit(LoginSuccessState());
         return showtoast(text: "${loginData!.message}", color: Colors.red);
@@ -52,7 +49,6 @@ class ShopCubit extends Cubit<ShopStates> {
       }
       emit(LoginSuccessState());
     }).catchError((error) {
-      print(error.toString());
       emit(LoginErrorState());
       return null;
     });
@@ -71,10 +67,8 @@ class ShopCubit extends Cubit<ShopStates> {
       name: name,
       phone: phone,
     ).then((value) {
-      print(value.data.toString());
       emit(RegisterSuccessState());
     }).catchError((error) {
-      print(error.toString());
       emit(RegisterErroeState());
     });
   }
@@ -123,17 +117,15 @@ class ShopCubit extends Cubit<ShopStates> {
   HomeModel? homeData;
   void getHomeData() {
     emit(GetHomeDataLoading());
-    print("===========================================================");
     DioHelper.getData(
       endPoint: "home",
+      token: token,
     ).then((value) {
       homeData = HomeModel.fromJson(value.data);
-      print("The Value of data ================ ${value.data.toString()}");
+      print(homeData!.data!.products!.length);
       emit(GetHomeDataSuccess());
     }).catchError((error) {
-      print(error.toString());
       emit(GetHomeDataError());
     });
   }
-
 }

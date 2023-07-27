@@ -41,10 +41,12 @@ class DioHelper {
 
   static Future<Response> getData({
     required String endPoint,
+    String? token,
   }) async {
     dio!.options.headers = {
       "Content-Type": "application/json",
       "lang": "ar",
+      "Authorization" : token
     };
     return await dio!.get(endPoint);
   }

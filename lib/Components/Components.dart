@@ -1,6 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/onboardingModel.dart';
 
 Widget onboardingWidget(OnboardingModel model) => Column(
@@ -92,4 +94,76 @@ Future<bool?> showtoast({
       backgroundColor: color,
       textColor: Colors.white,
       fontSize: 16.0.sp,
+    );
+
+Widget mySlider(HomeModel? model) => CarouselSlider(
+      items: model!.data!.banners!
+          .map(
+            (e) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25.0),
+                child: Image(
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  image: NetworkImage("${e.image}"),
+                ),
+              ),
+            ),
+          )
+          .toList(),
+      options: CarouselOptions(
+        clipBehavior: Clip.antiAlias,
+        height: 180.h,
+        viewportFraction: 1,
+        initialPage: 0,
+        enableInfiniteScroll: true,
+        reverse: true,
+        autoPlay: true,
+        autoPlayAnimationDuration: const Duration(milliseconds: 900),
+        autoPlayCurve: Curves.fastOutSlowIn,
+        scrollDirection: Axis.horizontal,
+        autoPlayInterval: const Duration(seconds: 3),
+      ),
+    );
+
+Widget justForTry({required context, required HomeModel? model, required int index}) => Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.blue),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image(
+              image: NetworkImage("${model!.data!.products![index].image}"),
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Price ",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Name of ',
+                  style: TextStyle(color: Colors.grey[800], fontSize: 20.sp),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.shopping_cart_rounded,
+                    size: 30,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
