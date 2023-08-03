@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shop_app/Components/Components.dart';
-import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -27,26 +26,26 @@ class HomeScreen extends StatelessWidget {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: MasonryGridView.builder(
-                            gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                            ),
-                            itemCount: ShopCubit.get(context).homeData!.data!.products!.length,
-                            physics: const BouncingScrollPhysics(),
-                            itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: justForTry(
-                                context: context,
-                                model: ShopCubit.get(context).homeData,
-                                index: index,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      //     child: MasonryGridView.builder(
+                      //       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      //         crossAxisCount: 2,
+                      //       ),
+                      //       itemCount: ShopCubit.get(context).homeData!.data!.products!.length,
+                      //       physics: const BouncingScrollPhysics(),
+                      //       itemBuilder: (context, index) => Padding(
+                      //         padding: const EdgeInsets.all(8.0),
+                      //         child: justForTry(
+                      //           context: context,
+                      //           model: ShopCubit.get(context).homeData,
+                      //           index: index,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
