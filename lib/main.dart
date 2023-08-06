@@ -15,9 +15,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
+
   await CacheHelper.init();
   onboard = CacheHelper.getData(key: 'board') ?? false;
   token = CacheHelper.getData(key: "token");
+    print(token);
   if (onboard == true) {
     if (token != null) {
       startScreen = const LayoutScreen();
@@ -38,7 +40,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShopCubit()..getHomeData(),
+      create: (context) => ShopCubit()
+        ..getHomeData()
+        ..getCategoriesData(),
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,

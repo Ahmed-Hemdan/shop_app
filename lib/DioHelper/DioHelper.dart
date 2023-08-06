@@ -6,12 +6,14 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-          baseUrl: "https://student.valuxapps.com/api/",
-          receiveDataWhenStatusError: true,
-          headers: {
-            "Content-Type": "application/json",
-            "lang": "ar",
-          }),
+        receiveTimeout: const Duration(seconds: 15),
+        baseUrl: "https://student.valuxapps.com/api/",
+        receiveDataWhenStatusError: true,
+        headers: {
+          "Content-Type": "application/json",
+          "lang": "ar",
+        },
+      ),
     );
   }
 
@@ -46,9 +48,21 @@ class DioHelper {
     dio!.options.headers = {
       "Content-Type": "application/json",
       "lang": "ar",
-      "Authorization" : token
+      "Authorization": token
     };
     return await dio!.get(endPoint);
   }
 
+  static postData({
+    required String endPoint,
+    required String token,
+    required Map data,
+  }) async {
+    dio!.options.headers = {
+      "Content-Type": "application/json",
+      "lang": "ar",
+      "Authorization": token
+    };
+    return await dio!.post(endPoint, data: data);
+  }
 }

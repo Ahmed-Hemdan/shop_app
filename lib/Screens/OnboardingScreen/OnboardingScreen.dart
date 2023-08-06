@@ -65,6 +65,7 @@ class OnboardingScreen extends StatelessWidget {
           children: [
             Expanded(
               child: PageView.builder(
+                physics: const BouncingScrollPhysics(),
                 controller: controller,
                 onPageChanged: (index) {
                   if (index == onboarding.length - 1) {

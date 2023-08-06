@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/Models/CategoriesModel.dart';
 import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/onboardingModel.dart';
+import 'package:shop_app/cubit/shop_cubit.dart';
 
 Widget onboardingWidget(OnboardingModel model) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,8 +129,16 @@ Widget mySlider(HomeModel? model) => CarouselSlider(
       ),
     );
 
-Widget justForTry({required context, required HomeModel? model, required int index}) => Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.blue),
+Widget homeListItem({
+  required context,
+  required HomeModel? model,
+  required int index,
+}) =>
+    Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.cyan[300]!.withOpacity(0.20),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -140,29 +150,88 @@ Widget justForTry({required context, required HomeModel? model, required int ind
               fit: BoxFit.cover,
             ),
             const SizedBox(
-              height: 10,
+              height: 2,
             ),
+            if (model.data!.products![index].discount != 0)
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  "Discount ",
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                  ),
+                ),
+              ),
             Text(
-              "Price ",
+              "${model.data!.products![index].name}",
               style: Theme.of(context).textTheme.bodyLarge,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Name of ',
-                  style: TextStyle(color: Colors.grey[800], fontSize: 20.sp),
+                Column(
+                  children: [
+                    Text(
+                      '${model.data!.products![index].price}',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    if (model.data!.products![index].discount != 0)
+                      Text(
+                        '${model.data!.products![index].oldPrice}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                  ],
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.shopping_cart_rounded,
+                  onPressed: () {
+                    model.data!.products![index].inFavorites != model.data!.products![index].inFavorites;
+                    ShopCubit.get(context).makeProductInFavorits(index);
+                  },
+                  icon: Icon(
+                    Icons.favorite,
                     size: 30,
+                    color: model.data!.products![index].inFavorites == true ? Colors.red : Colors.grey,
                   ),
                 ),
               ],
             ),
+          ],
+        ),
+      ),
+    );
+
+Widget categoriesListItem(
+  CategoriesModel model,
+  int index,
+) =>
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.cyan[300]!.withOpacity(0.20),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SizedBox(
+                width: 100.w,
+                height: 100.h,
+                child: Image(
+                  image: NetworkImage('${model.data!.categoryData![index].image}'),
+                ),
+              ),
+            ),
+            Text("${model.data!.categoryData![index].name}"),
           ],
         ),
       ),
