@@ -112,18 +112,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (_formKey.currentState!.validate()) {
                               ShopCubit.get(context)
                                   .login(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  )
-                                  .then(
-                                    (value) => Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const LayoutScreen(),
-                                      ),
-                                      (route) => false,
+                                email: emailController.text,
+                                password: passwordController.text,
+                              )
+                                  .then((value) {
+                                if (ShopCubit.get(context).loginData!.status == true) {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LayoutScreen(),
                                     ),
+                                    (route) => false,
                                   );
+                                } else {
+                                  return null;
+                                }
+                              });
                             }
                           },
                           text: "Login",
@@ -166,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

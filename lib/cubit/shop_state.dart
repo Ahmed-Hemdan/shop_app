@@ -25,3 +25,15 @@ class GetHomeDataLoading extends ShopStates {}
 class GetHomeDataSuccess extends ShopStates {}
 
 class GetHomeDataError extends ShopStates {}
+
+class GetCategoriesDataLoading extends ShopStates {}
+
+class GetCategoriesDataSuccess extends ShopStates {}
+
+class GetCategoriesDataError extends ShopStates {}
+
+class MakeProductInFavoritsLoading extends ShopStates {}
+
+class MakeProductInFavoritsSuccess extends ShopStates {}
+
+class MakeProductInFavoritsError extends ShopStates {}

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/Components/Components.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Global/Global.dart';
+import 'package:shop_app/Models/CategoriesModel.dart';
 import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/LoginModel.dart';
 import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
@@ -45,6 +46,7 @@ class ShopCubit extends Cubit<ShopStates> {
       } else {
         emit(LoginSuccessState());
         CacheHelper.setData(key: "token", value: loginData!.data!.token);
+        token = CacheHelper.getData(key: "token");
         showtoast(text: "${loginData!.message}", color: Colors.green);
       }
       emit(LoginSuccessState());
@@ -122,9 +124,39 @@ class ShopCubit extends Cubit<ShopStates> {
       token: token,
     ).then((value) {
       homeData = HomeModel.fromJson(value.data);
+      print(homeData!.data!.products!.length);
       emit(GetHomeDataSuccess());
     }).catchError((error) {
       emit(GetHomeDataError());
+    });
+  }
+
+  CategoriesModel? categoriesData;
+  void getCategoriesData() {
+    emit(GetCategoriesDataLoading());
+    DioHelper.getData(endPoint: "categories").then((value) {
+      categoriesData = CategoriesModel.fromJson(value.data);
+      print(categoriesData!.data!.categoryData!.length);
+      emit(GetCategoriesDataSuccess());
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetCategoriesDataError());
+    });
+  }
+
+  void makeProductInFavorits(int index) {
+    emit(MakeProductInFavoritsLoading());
+    DioHelper.postData(
+      endPoint: "favorites",
+      token: token!,
+      data: {
+        "product_id": "${homeData!.data!.products![index].id}"
+      },
+    ).then((value) {
+      emit(MakeProductInFavoritsSuccess());
+    }).catchError((error) {
+      print(error.toString());
+      emit(MakeProductInFavoritsError());
     });
   }
 }

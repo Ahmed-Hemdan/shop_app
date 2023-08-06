@@ -22,7 +22,7 @@ class LayoutScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               "Salla",
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
           ),
           body: ShopCubit.get(context).screens[ShopCubit.get(context).currentIndex],

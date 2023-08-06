@@ -13,43 +13,90 @@ class HomeScreen extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        return Scaffold(
-          body: ShopCubit.get(context).homeData == null
-              ? const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      mySlider(ShopCubit.get(context).homeData),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      // Expanded(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      //     child: MasonryGridView.builder(
-                      //       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                      //         crossAxisCount: 2,
-                      //       ),
-                      //       itemCount: ShopCubit.get(context).homeData!.data!.products!.length,
-                      //       physics: const BouncingScrollPhysics(),
-                      //       itemBuilder: (context, index) => Padding(
-                      //         padding: const EdgeInsets.all(8.0),
-                      //         child: justForTry(
-                      //           context: context,
-                      //           model: ShopCubit.get(context).homeData,
-                      //           index: index,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
+        if (ShopCubit.get(context).homeData == null || ShopCubit.get(context).categoriesData == null) {
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  mySlider(ShopCubit.get(context).homeData),
+                  SizedBox(
+                    height: 20.h,
                   ),
-                ),
-        );
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      "Categories",
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 150.h,
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: ShopCubit.get(context).categoriesData!.data!.categoryData!.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Image(
+                              width: 100.w,
+                              height: 100.h,
+                              fit: BoxFit.cover,
+                              image: NetworkImage('${ShopCubit.get(context).categoriesData!.data!.categoryData![index].image}'),
+                            ),
+                            Container(
+                              width: 100.w,
+                              color: Colors.cyan[300]!.withOpacity(0.2),
+                              child: Text(
+                                "${ShopCubit.get(context).categoriesData!.data!.categoryData![index].name}",
+                                style: Theme.of(context).textTheme.bodyLarge,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      "New Products",
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: MasonryGridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      itemCount: ShopCubit.get(context).homeData!.data!.products!.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: homeListItem(
+                          context: context,
+                          model: ShopCubit.get(context).homeData,
+                          index: index,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
       },
     );
   }

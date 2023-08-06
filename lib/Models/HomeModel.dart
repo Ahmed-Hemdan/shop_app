@@ -1,5 +1,3 @@
-
-
 class HomeModel {
   bool? status;
   DataHomeModel? data;
@@ -26,7 +24,7 @@ class DataHomeModel {
     }
     if (json['products'] != null) {
       products = <ProductModel>[];
-      products = json['products'].forEach(
+       json['products'].forEach(
         (e) => products!.add(
           ProductModel.fromJson(e),
         ),
@@ -51,20 +49,19 @@ class ProductModel {
   int? id;
   double? price;
   double? oldPrice;
-  int? discount;
+  double? discount;
   String? image;
   String? name;
   bool? inFavorites;
   bool? inCart;
   ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    price = json['price'].toDouble();
-    oldPrice = json['old_price'].toDouble();
-    discount = json['discount'];
+    id = json['id'] ?? 1;
+    price = json['price'].toDouble() ?? 20;
+    oldPrice = json['old_price'].toDouble() ?? 20;
+    discount = json['discount'].toDouble() ?? 20;
     image = json['image'] ?? "";
-    name = json['name'];
-    inFavorites = json['in_favorites'];
-    inCart = json['in_cart'];
+    name = json['name'] ?? '';
+    inFavorites = json['in_favorites'] ?? false;
+    inCart = json['in_cart'] ?? false;
   }
 }
-
