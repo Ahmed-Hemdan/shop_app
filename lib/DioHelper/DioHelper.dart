@@ -6,7 +6,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        receiveTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 30),
         baseUrl: "https://student.valuxapps.com/api/",
         receiveDataWhenStatusError: true,
         headers: {
@@ -55,14 +55,14 @@ class DioHelper {
 
   static postData({
     required String endPoint,
-    required String token,
-    required Map data,
+     String? token ,
+     Map? data,
   }) async {
     dio!.options.headers = {
       "Content-Type": "application/json",
       "lang": "ar",
       "Authorization": token
     };
-    return await dio!.post(endPoint, data: data);
+    return await dio!.post(endPoint, data: data );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/Models/CategoriesModel.dart';
+import 'package:shop_app/Models/FavoritsModel.dart';
 import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/onboardingModel.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
@@ -192,7 +193,6 @@ Widget homeListItem({
                 ),
                 IconButton(
                   onPressed: () {
-                    model.data!.products![index].inFavorites != model.data!.products![index].inFavorites;
                     ShopCubit.get(context).makeProductInFavorits(index);
                   },
                   icon: Icon(
@@ -232,6 +232,57 @@ Widget categoriesListItem(
               ),
             ),
             Text("${model.data!.categoryData![index].name}"),
+          ],
+        ),
+      ),
+    );
+Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.cyan[300]!.withOpacity(0.20),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SizedBox(
+                width: 100.w,
+                height: 100.h,
+                child: Image(
+                  image: NetworkImage('${model.data!.data![index].product!.image}'),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${model.data!.data![index].product!.name}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  Text("${model.data!.data![index].product!.price}"),
+                ],
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                model.data!.data!.remove(index);
+                ShopCubit.get(context).homeData!.data!.products!.where((element) => element.id == model.data!.data![index].product!.id).where((element) => element.inFavorites == false);
+                ShopCubit.get(context).deleteProductFromFavorits(index);
+                ShopCubit.get(context).getFavoritsData();
+                ShopCubit.get(context).getHomeData();
+              },
+              icon: const Icon(
+                Icons.favorite,
+                color: Colors.red,
+                size: 30,
+              ),
+            ),
           ],
         ),
       ),

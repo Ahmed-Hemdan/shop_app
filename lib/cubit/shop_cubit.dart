@@ -4,6 +4,7 @@ import 'package:shop_app/Components/Components.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Global/Global.dart';
 import 'package:shop_app/Models/CategoriesModel.dart';
+import 'package:shop_app/Models/FavoritsModel.dart';
 import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/LoginModel.dart';
 import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
@@ -124,7 +125,6 @@ class ShopCubit extends Cubit<ShopStates> {
       token: token,
     ).then((value) {
       homeData = HomeModel.fromJson(value.data);
-      print(homeData!.data!.products!.length);
       emit(GetHomeDataSuccess());
     }).catchError((error) {
       emit(GetHomeDataError());
@@ -136,7 +136,6 @@ class ShopCubit extends Cubit<ShopStates> {
     emit(GetCategoriesDataLoading());
     DioHelper.getData(endPoint: "categories").then((value) {
       categoriesData = CategoriesModel.fromJson(value.data);
-      print(categoriesData!.data!.categoryData!.length);
       emit(GetCategoriesDataSuccess());
     }).catchError((error) {
       print(error.toString());
@@ -145,18 +144,59 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   void makeProductInFavorits(int index) {
+    if (homeData!.data!.products![index].inFavorites == false) {
+      homeData!.data!.products![index].inFavorites = true;
+    } else if (homeData!.data!.products![index].inFavorites == true) {
+      homeData!.data!.products![index].inFavorites = false;
+    } else {
+      null;
+    }
     emit(MakeProductInFavoritsLoading());
     DioHelper.postData(
       endPoint: "favorites",
-      token: token!,
+      token: token,
       data: {
         "product_id": "${homeData!.data!.products![index].id}"
       },
     ).then((value) {
+      getFavoritsData();
       emit(MakeProductInFavoritsSuccess());
     }).catchError((error) {
-      print(error.toString());
+      if (homeData!.data!.products![index].inFavorites == false) {
+        homeData!.data!.products![index].inFavorites = true;
+      } else if (homeData!.data!.products![index].inFavorites == true) {
+        homeData!.data!.products![index].inFavorites = false;
+      } else {
+        null;
+      }
+      showtoast(text: error.toString(), color: Colors.red);
       emit(MakeProductInFavoritsError());
+    });
+  }
+
+  FavoritsModel? favoritsData;
+  Future<void> getFavoritsData() async {
+    emit(GetFavoritsDataLoading());
+    DioHelper.getData(endPoint: "favorites", token: token).then((value) {
+      favoritsData = FavoritsModel.fromJson(value.data);
+      emit(GetFavoritsDataSuccess());
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetFavoritsDataError());
+    });
+  }
+
+  void deleteProductFromFavorits(int index) {
+    emit(DeleteProductFromFavoritsLoading());
+    DioHelper.postData(
+      endPoint: "favorites",
+      token: token,
+      data: {
+        "product_id": "${favoritsData!.data!.data![index].product!.id}"
+      },
+    ).then((value) => emit(DeleteProductFromFavoritsSuccess())).catchError((error) {
+      print(error.toString());
+      emit(DeleteProductFromFavoritsError());
     });
   }
 }

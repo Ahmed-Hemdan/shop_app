@@ -37,3 +37,15 @@ class MakeProductInFavoritsLoading extends ShopStates {}
 class MakeProductInFavoritsSuccess extends ShopStates {}
 
 class MakeProductInFavoritsError extends ShopStates {}
+
+class DeleteProductFromFavoritsError extends ShopStates {}
+
+class DeleteProductFromFavoritsSuccess extends ShopStates {}
+
+class DeleteProductFromFavoritsLoading extends ShopStates {}
+
+class GetFavoritsDataSuccess extends ShopStates {}
+
+class GetFavoritsDataLoading extends ShopStates {}
+
+class GetFavoritsDataError extends ShopStates {}
