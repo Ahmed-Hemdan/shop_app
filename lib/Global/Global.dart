@@ -4,10 +4,4 @@ bool onboard = false;
 String? token;
 Widget? startScreen;
 
-
-
-
-
-
-
-
+bool theme = false;

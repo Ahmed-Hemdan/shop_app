@@ -146,9 +146,12 @@ Widget homeListItem({
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image(
-              image: NetworkImage("${model!.data!.products![index].image}"),
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image(
+                image: NetworkImage("${model!.data!.products![index].image}", scale: 1),
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(
               height: 2,
@@ -226,8 +229,11 @@ Widget categoriesListItem(
               child: SizedBox(
                 width: 100.w,
                 height: 100.h,
-                child: Image(
-                  image: NetworkImage('${model.data!.categoryData![index].image}'),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image(
+                    image: NetworkImage('${model.data!.categoryData![index].image}'),
+                  ),
                 ),
               ),
             ),
@@ -247,11 +253,14 @@ Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
           children: [
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: SizedBox(
-                width: 100.w,
-                height: 100.h,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
                 child: Image(
-                  image: NetworkImage('${model.data!.data![index].product!.image}'),
+                  height: 100.h,
+                  width: 100.w,
+                  image: NetworkImage(
+                    '${model.data!.data![index].product!.image}',
+                  ),
                 ),
               ),
             ),

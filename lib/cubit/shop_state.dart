@@ -49,3 +49,5 @@ class GetFavoritsDataSuccess extends ShopStates {}
 class GetFavoritsDataLoading extends ShopStates {}
 
 class GetFavoritsDataError extends ShopStates {}
+
+class ChangeAppTheme extends ShopStates {}

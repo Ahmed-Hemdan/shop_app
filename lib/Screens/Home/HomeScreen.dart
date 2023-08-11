@@ -44,24 +44,32 @@ class HomeScreen extends StatelessWidget {
                       itemCount: ShopCubit.get(context).categoriesData!.data!.categoryData!.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Image(
-                              width: 100.w,
-                              height: 100.h,
-                              fit: BoxFit.cover,
-                              image: NetworkImage('${ShopCubit.get(context).categoriesData!.data!.categoryData![index].image}'),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Container(
+                            color: Colors.cyan[300]!.withOpacity(0.2),
+                            width: 100.w,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image(
+                                    width: 100.w,
+                                    height: 100.h,
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage('${ShopCubit.get(context).categoriesData!.data!.categoryData![index].image}'),
+                                  ),
+                                ),
+                                Text(
+                                  "${ShopCubit.get(context).categoriesData!.data!.categoryData![index].name}",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ],
                             ),
-                            Container(
-                              width: 100.w,
-                              color: Colors.cyan[300]!.withOpacity(0.2),
-                              child: Text(
-                                "${ShopCubit.get(context).categoriesData!.data!.categoryData![index].name}",
-                                style: Theme.of(context).textTheme.bodyLarge,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),

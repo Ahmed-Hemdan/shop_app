@@ -16,7 +16,7 @@ class FavoritesScreen extends StatelessWidget {
             : RefreshIndicator(
                 onRefresh: () {
                   ShopCubit.get(context).favoritsData = null;
-                 return ShopCubit.get(context).getFavoritsData();
+                  return ShopCubit.get(context).getFavoritsData();
                 },
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
@@ -25,7 +25,14 @@ class FavoritesScreen extends StatelessWidget {
                     context,
                     index,
                   ) {
-                    return favoritsListItem(ShopCubit.get(context).favoritsData!, index , context);
+                    return BlocConsumer<ShopCubit, ShopStates>(
+                      listener: (context, state) {
+                        // TODO: implement listener
+                      },
+                      builder: (context, state) {
+                        return favoritsListItem(ShopCubit.get(context).favoritsData!, index, context);
+                      },
+                    );
                   },
                 ),
               );
