@@ -16,9 +16,11 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
 
-  await CacheHelper.init();
-  onboard = CacheHelper.getData(key: 'board') ?? false;
-  token = CacheHelper.getData(key: "token");
+  await CachHelper.init();
+  theme = CachHelper.getData(key: "theme") ?? false;
+  print(theme);
+  onboard = CachHelper.getData(key: 'board') ?? false;
+  token = CachHelper.getData(key: "token");
   if (onboard == true) {
     if (token != null) {
       startScreen = const LayoutScreen();
@@ -43,16 +45,21 @@ class MyApp extends StatelessWidget {
         ..getHomeData()
         ..getCategoriesData()
         ..getFavoritsData(),
-      child: ScreenUtilInit(
-        designSize: const Size(360, 690),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: lightTheme,
-          home: startScreen,
-        ),
+      child: BlocConsumer<ShopCubit, ShopStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return ScreenUtilInit(
+            designSize: const Size(360, 690),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) => MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              theme: theme == false ? lightTheme : darkTheme,
+              home: startScreen,
+            ),
+          );
+        },
       ),
     );
   }

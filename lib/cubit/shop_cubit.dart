@@ -46,8 +46,8 @@ class ShopCubit extends Cubit<ShopStates> {
         return showtoast(text: "${loginData!.message}", color: Colors.red);
       } else {
         emit(LoginSuccessState());
-        CacheHelper.setData(key: "token", value: loginData!.data!.token);
-        token = CacheHelper.getData(key: "token");
+        CachHelper.setData(key: "token", value: loginData!.data!.token);
+        token = CachHelper.getData(key: "token");
         showtoast(text: "${loginData!.message}", color: Colors.green);
       }
       emit(LoginSuccessState());
@@ -195,8 +195,14 @@ class ShopCubit extends Cubit<ShopStates> {
         "product_id": "${favoritsData!.data!.data![index].product!.id}"
       },
     ).then((value) => emit(DeleteProductFromFavoritsSuccess())).catchError((error) {
-      print(error.toString());
       emit(DeleteProductFromFavoritsError());
+    });
+  }
+
+  void switchTheme() {
+    theme = !theme;
+    CachHelper.setData(value: theme, key: "theme").then((value) {
+      emit(ChangeAppTheme());
     });
   }
 }

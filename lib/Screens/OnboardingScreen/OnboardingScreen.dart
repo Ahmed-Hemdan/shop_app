@@ -40,7 +40,7 @@ class OnboardingScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: TextButton(
               onPressed: () {
-                CacheHelper.setData(value: true, key: 'board');
+                CachHelper.setData(value: true, key: 'board');
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
@@ -59,7 +59,7 @@ class OnboardingScreen extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const EdgeInsets.all(23.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -109,7 +109,7 @@ class OnboardingScreen extends StatelessWidget {
                           curve: Curves.fastLinearToSlowEaseIn,
                         );
                       } else {
-                        CacheHelper.setData(value: true, key: 'board');
+                        CachHelper.setData(value: true, key: 'board');
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
