@@ -144,6 +144,7 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   void makeProductInFavorits(int index) {
+    
     if (homeData!.data!.products![index].inFavorites == false) {
       homeData!.data!.products![index].inFavorites = true;
     } else if (homeData!.data!.products![index].inFavorites == true) {
