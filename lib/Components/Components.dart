@@ -280,8 +280,6 @@ Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
             ),
             IconButton(
               onPressed: () {
-                model.data!.data!.remove(index);
-                ShopCubit.get(context).homeData!.data!.products!.where((element) => element.id == model.data!.data![index].product!.id).where((element) => element.inFavorites == false);
                 ShopCubit.get(context).deleteProductFromFavorits(index);
                 ShopCubit.get(context).getFavoritsData();
                 ShopCubit.get(context).getHomeData();
