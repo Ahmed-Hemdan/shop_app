@@ -31,7 +31,7 @@ class LayoutScreen extends StatelessWidget {
                   onPressed: () {
                     ShopCubit.get(context).switchTheme();
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.brightness_6_outlined,
                     color: Colors.grey,
                   ))

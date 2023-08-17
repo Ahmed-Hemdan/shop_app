@@ -281,8 +281,9 @@ Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
             IconButton(
               onPressed: () {
                 ShopCubit.get(context).deleteProductFromFavorits(index);
-                ShopCubit.get(context).getFavoritsData();
                 ShopCubit.get(context).getHomeData();
+                model.data!.data!.removeAt(index);
+                ShopCubit.get(context).getFavoritsData();
               },
               icon: const Icon(
                 Icons.favorite,
@@ -291,6 +292,39 @@ Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
               ),
             ),
           ],
+        ),
+      ),
+    );
+
+Widget profileItem(IconData icon, String text) => Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.cyan[400]!.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                size: 32,
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Text(text),
+              const Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.edit,
+                  size: 23,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

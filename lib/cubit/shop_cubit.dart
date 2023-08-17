@@ -10,7 +10,7 @@ import 'package:shop_app/Models/LoginModel.dart';
 import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
 import 'package:shop_app/Screens/Favorites/FavoritesScreen.dart';
 import 'package:shop_app/Screens/Home/HomeScreen.dart';
-import 'package:shop_app/Screens/Settings/SettingsScreen.dart';
+import 'package:shop_app/Screens/Proflie/ProfileScreen.dart';
 import 'package:shop_app/shared/shared_preferences.dart';
 
 part 'shop_state.dart';
@@ -104,9 +104,9 @@ class ShopCubit extends Cubit<ShopStates> {
     ),
     BottomNavigationBarItem(
       icon: Icon(
-        Icons.settings,
+        Icons.person_2_sharp,
       ),
-      label: "Settings",
+      label: "Profile",
     ),
   ];
 
@@ -114,7 +114,7 @@ class ShopCubit extends Cubit<ShopStates> {
     HomeScreen(),
     FavoritesScreen(),
     CategoriesScreen(),
-    SettingsScreen(),
+    ProfileScreen(),
   ];
 
   HomeModel? homeData;
@@ -144,7 +144,6 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   void makeProductInFavorits(int index) {
-    
     if (homeData!.data!.products![index].inFavorites == false) {
       homeData!.data!.products![index].inFavorites = true;
     } else if (homeData!.data!.products![index].inFavorites == true) {
