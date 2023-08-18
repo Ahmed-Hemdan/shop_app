@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shop_app/Components/Components.dart';
 import 'package:shop_app/Global/Global.dart';
+import 'package:shop_app/Screens/Login/LoginScreen.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -14,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Stack(
               children: [
@@ -35,7 +39,9 @@ class ProfileScreen extends StatelessWidget {
                       color: Colors.cyan[300],
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        ShopCubit.get(context).getProfile();
+                      },
                       icon: const Icon(Icons.add_photo_alternate),
                     ),
                   ),
@@ -54,9 +60,9 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  profileItem(Icons.person, "User name"),
-                  profileItem(Icons.person, "User name"),
-                  profileItem(Icons.person, "User name"),
+                  profileItem(Icons.person, "${ShopCubit.get(context).userData.name}", getCurrentTag),
+                  profileItem(Icons.email, "${ShopCubit.get(context).userData.email}", getCurrentTag),
+                  profileItem(Icons.phone, "${ShopCubit.get(context).userData.phone}", getCurrentTag),
                 ],
               ),
             ),
@@ -76,6 +82,24 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Do you wanna logout :(  ?"),
+                TextButton(
+                    onPressed: () {
+                      ShopCubit.get(context).logOut();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                          (route) => false);
+                      print(token);
+                    },
+                    child: const Text("Logout"))
+              ],
             )
           ],
         ),

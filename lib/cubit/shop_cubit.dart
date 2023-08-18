@@ -7,6 +7,7 @@ import 'package:shop_app/Models/CategoriesModel.dart';
 import 'package:shop_app/Models/FavoritsModel.dart';
 import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/LoginModel.dart';
+import 'package:shop_app/Models/UserDataModel.dart';
 import 'package:shop_app/Screens/Categories/CategoriesScreen.dart';
 import 'package:shop_app/Screens/Favorites/FavoritesScreen.dart';
 import 'package:shop_app/Screens/Home/HomeScreen.dart';
@@ -203,6 +204,30 @@ class ShopCubit extends Cubit<ShopStates> {
     theme = !theme;
     CachHelper.setData(value: theme, key: "theme").then((value) {
       emit(ChangeAppTheme());
+    });
+  }
+
+  late UserDataModel userData;
+  void getProfile() {
+    emit(GetUserDataLoading());
+    DioHelper.getData(endPoint: "profile", token: token).then((value) {
+      userData = UserDataModel.fromJson(value.data["data"]);
+      emit(GetUserDataSuccess());
+    }).catchError((error) {
+      emit(GetUserDataError());
+    });
+  }
+
+  void updateProfile() {
+    DioHelper.postData(endPoint: 'update-profile', token: token, data: {});
+  }
+
+  void logOut() {
+    DioHelper.postData(endPoint: "logout", token: token).then((value) {
+      emit(LogOutSuccess());
+    }).catchError((error) {
+      print(error.toString());
+      emit(LogOutError());
     });
   }
 }

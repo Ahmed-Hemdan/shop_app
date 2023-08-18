@@ -296,7 +296,7 @@ Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
       ),
     );
 
-Widget profileItem(IconData icon, String text) => Padding(
+Widget profileItem(IconData icon, String text , void Function()? fun) => Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
@@ -314,10 +314,17 @@ Widget profileItem(IconData icon, String text) => Padding(
               SizedBox(
                 width: 10.w,
               ),
-              Text(text),
+              SizedBox(
+                width: 200.w,
+                child: Text(
+                  text,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
               const Spacer(),
               IconButton(
-                onPressed: () {},
+                onPressed:fun,
                 icon: const Icon(
                   Icons.edit,
                   size: 23,

@@ -51,3 +51,13 @@ class GetFavoritsDataLoading extends ShopStates {}
 class GetFavoritsDataError extends ShopStates {}
 
 class ChangeAppTheme extends ShopStates {}
+
+class GetUserDataSuccess extends ShopStates {}
+
+class GetUserDataLoading extends ShopStates {}
+
+class GetUserDataError extends ShopStates {}
+
+class LogOutSuccess extends ShopStates {}
+
+class LogOutError extends ShopStates {}

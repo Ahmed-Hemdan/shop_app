@@ -18,9 +18,11 @@ void main() async {
 
   await CachHelper.init();
   theme = CachHelper.getData(key: "theme") ?? false;
-  print(theme);
+
   onboard = CachHelper.getData(key: 'board') ?? false;
   token = CachHelper.getData(key: "token");
+  print(token);
+
   if (onboard == true) {
     if (token != null) {
       startScreen = const LayoutScreen();
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ShopCubit()
+        ..getProfile()
         ..getHomeData()
         ..getCategoriesData()
         ..getFavoritsData(),
