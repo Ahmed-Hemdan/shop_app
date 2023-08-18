@@ -55,14 +55,23 @@ class DioHelper {
 
   static postData({
     required String endPoint,
-     String? token ,
-     Map? data,
+    String? token,
+    Map? data,
   }) async {
     dio!.options.headers = {
       "Content-Type": "application/json",
       "lang": "ar",
       "Authorization": token
     };
-    return await dio!.post(endPoint, data: data );
+    return await dio!.post(endPoint, data: data);
+  }
+
+  static putData({required String? token , required String endPoint , required Map data}) async {
+    dio!.options.headers = {
+      "Content-Type": "application/json",
+      "lang": "ar",
+      "Authorization": token,
+    };
+    return await dio!.put(endPoint , data: data );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-
+  final GlobalKey _formKey =  GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -47,17 +49,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   IconButton(
                     onPressed: () {
                       _scaffoldKey.currentState!.showBottomSheet(
-                        (context) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).bottomSheetTheme.backgroundColor,
-                          ),
-                          child: bottomSheetItem(
-                            context: context,
-                            emailController: emailController,
-                            nameController: nameController,
-                            phoneController: phoneController,
-                          ),
+                        (context) => bottomSheetItem(
+                          context: context,
+                          emailController: emailController,
+                          nameController: nameController,
+                          phoneController: phoneController,
+                          formKey: _formKey
                         ),
                       );
                     },

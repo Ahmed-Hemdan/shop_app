@@ -61,3 +61,7 @@ class GetUserDataError extends ShopStates {}
 class LogOutSuccess extends ShopStates {}
 
 class LogOutError extends ShopStates {}
+
+class EditProfileSuccess extends ShopStates {}
+
+class EditProfileError extends ShopStates {}

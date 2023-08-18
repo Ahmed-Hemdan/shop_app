@@ -338,98 +338,114 @@ Widget bottomSheetItem({
   required TextEditingController nameController,
   required TextEditingController emailController,
   required TextEditingController phoneController,
+  required formKey,
 }) =>
     Container(
-      height: 260.h,
       width: double.infinity,
+      height: 280.h,
       decoration: BoxDecoration(
         color: Theme.of(context).bottomSheetTheme.backgroundColor,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("Update your profile "),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: defaultTextFormField(
-              controller: nameController,
-              type: TextInputType.name,
-              icon: const Icon(Icons.person),
-              hint: "Name",
-              validate: (value) {
-                if (value!.isEmpty) {
-                  return "Name can't be empty";
-                } else {
-                  return null;
-                }
-              },
+      child: Form(
+        key: formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Update your profile "),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: defaultTextFormField(
-              controller: emailController,
-              type: TextInputType.emailAddress,
-              icon: const Icon(Icons.email),
-              hint: "Email",
-              validate: (value) {
-                if (value!.isEmpty) {
-                  return 'Email cant be impty';
-                } else if (emailReg.hasMatch(value)) {
-                  return null;
-                } else {
-                  return "enter a vaild email";
-                }
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: defaultTextFormField(
-              controller: phoneController,
-              type: TextInputType.phone,
-              icon: const Icon(Icons.phone),
-              hint: "Phone",
-              validate: (value) {
-                if (value!.isEmpty) {
-                  return "please enter your phone";
-                } else if (phoneReg.hasMatch(value)) {
-                  return null;
-                } else {
-                  return "enter a vaild phone number";
-                }
-              },
-            ),
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: defaultTextFormField(
+                controller: nameController,
+                type: TextInputType.name,
+                icon: const Icon(Icons.person),
+                hint: "Name",
+                validate: (value) {
+                  if (value!.isEmpty) {
+                    return "Name can't be empty";
+                  } else {
+                    return null;
+                  }
                 },
-                child: const Text(
-                  "Cancel",
-                  style: TextStyle(color: Colors.cyan),
-                ),
               ),
-              SizedBox(
-                width: 15.w,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: defaultTextFormField(
+                controller: emailController,
+                type: TextInputType.emailAddress,
+                icon: const Icon(Icons.email),
+                hint: "Email",
+                validate: (value) {
+                  if (value!.isEmpty) {
+                    return 'Email cant be impty';
+                  } else if (emailReg.hasMatch(value)) {
+                    return null;
+                  } else {
+                    return "enter a vaild email";
+                  }
+                },
               ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "Save",
-                  style: TextStyle(color: Colors.cyan),
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: defaultTextFormField(
+                controller: phoneController,
+                type: TextInputType.phone,
+                icon: const Icon(Icons.phone),
+                hint: "Phone",
+                validate: (value) {
+                  if (value!.isEmpty) {
+                    return "please enter your phone";
+                  } else if (phoneReg.hasMatch(value)) {
+                    return null;
+                  } else {
+                    return "enter a vaild phone number";
+                  }
+                },
               ),
-            ],
-          )
-        ],
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(color: Colors.cyan),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      ShopCubit.get(context).editProfile(
+                        nameController.text,
+                        emailController.text,
+                        phoneController.text,
+                      );
+                      nameController.clear();
+                      emailController.clear();
+                      phoneController.clear();
+                    },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.cyan),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );

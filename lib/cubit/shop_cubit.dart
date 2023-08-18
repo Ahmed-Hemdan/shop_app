@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/Components/Components.dart';
@@ -207,7 +209,7 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-   UserDataModel? userData;
+  UserDataModel? userData;
   void getProfile() {
     emit(GetUserDataLoading());
     DioHelper.getData(endPoint: "profile", token: token).then((value) {
@@ -218,16 +220,26 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-  void updateProfile() {
-    DioHelper.postData(endPoint: 'update-profile', token: token, data: {});
-  }
-
   void logOut() {
     DioHelper.postData(endPoint: "logout", token: token).then((value) {
       emit(LogOutSuccess());
     }).catchError((error) {
       print(error.toString());
       emit(LogOutError());
+    });
+  }
+
+  void editProfile(String name, email, phone) {
+    DioHelper.putData(token: token, endPoint: "update-profile", data: {
+      "name": name,
+      "phone": phone,
+      "email": email,
+    }).then((value) {
+      emit(EditProfileSuccess());
+      getProfile();
+    }).catchError((error) {
+      print(error.toString());
+      emit(EditProfileError());
     });
   }
 }
