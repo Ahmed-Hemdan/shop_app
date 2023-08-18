@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+
 
   @override
   void dispose() {

@@ -4,6 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
+  bottomSheetTheme: const BottomSheetThemeData(
+    elevation: 15,
+    backgroundColor: Colors.white,
+  ),
   appBarTheme: const AppBarTheme(
     elevation: 0,
     systemOverlayStyle: SystemUiOverlayStyle(
