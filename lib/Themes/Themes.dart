@@ -43,6 +43,7 @@ ThemeData lightTheme = ThemeData(
 
 ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: const Color(0xff303030),
+  bottomSheetTheme: const BottomSheetThemeData(backgroundColor: Color.fromARGB(255, 71, 66, 66)),
   appBarTheme: const AppBarTheme(
     elevation: 0,
     backgroundColor: Color(0xff303030),

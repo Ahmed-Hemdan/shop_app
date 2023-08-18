@@ -124,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     (route) => false,
                                   );
+                                  ShopCubit.get(context).getProfile();
                                 } else {
                                   return null;
                                 }

@@ -296,7 +296,7 @@ Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
       ),
     );
 
-Widget profileItem(IconData icon, String text , void Function()? fun) => Padding(
+Widget profileItem(IconData icon, String text, ) => Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
@@ -322,16 +322,62 @@ Widget profileItem(IconData icon, String text , void Function()? fun) => Padding
                   maxLines: 1,
                 ),
               ),
-              const Spacer(),
-              IconButton(
-                onPressed:fun,
-                icon: const Icon(
-                  Icons.edit,
-                  size: 23,
-                ),
-              ),
+              
             ],
           ),
         ),
+      ),
+    );
+
+Widget bottomSheetItem({required context, required String text ,required TextEditingController controller, required String? Function(String?) validate , required  TextInputType type}) => Container(
+      height: 150.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Theme.of(context).bottomSheetTheme.backgroundColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Enter your $text"),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: defaultTextFormField(
+              controller: controller,
+              type: type,
+              icon: const Icon(Icons.person),
+              hint: text,
+              validate: validate,
+            ),
+          ),
+          Row(
+            children: [
+              const Spacer(),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(color: Colors.cyan),
+                ),
+              ),
+              SizedBox(
+                width: 15.w,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Save",
+                  style: TextStyle(color: Colors.cyan),
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     );

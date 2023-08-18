@@ -207,7 +207,7 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-  late UserDataModel userData;
+   UserDataModel? userData;
   void getProfile() {
     emit(GetUserDataLoading());
     DioHelper.getData(endPoint: "profile", token: token).then((value) {

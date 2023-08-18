@@ -1,24 +1,60 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shop_app/Components/Components.dart';
 import 'package:shop_app/Global/Global.dart';
 import 'package:shop_app/Screens/Login/LoginScreen.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
+import 'package:shop_app/shared/shared_preferences.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  RegExp emailReg = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  RegExp phoneReg = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.edit,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Stack(
               children: [
                 SizedBox(
@@ -39,9 +75,7 @@ class ProfileScreen extends StatelessWidget {
                       color: Colors.cyan[300],
                     ),
                     child: IconButton(
-                      onPressed: () {
-                        ShopCubit.get(context).getProfile();
-                      },
+                      onPressed: () {},
                       icon: const Icon(Icons.add_photo_alternate),
                     ),
                   ),
@@ -51,20 +85,29 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(
               height: 30.h,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.cyan[300]!.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  profileItem(Icons.person, "${ShopCubit.get(context).userData.name}", getCurrentTag),
-                  profileItem(Icons.email, "${ShopCubit.get(context).userData.email}", getCurrentTag),
-                  profileItem(Icons.phone, "${ShopCubit.get(context).userData.phone}", getCurrentTag),
-                ],
-              ),
+            BlocConsumer<ShopCubit, ShopStates>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                return ShopCubit.get(context).userData == null
+                    ? const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      )
+                    : Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.cyan[300]!.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          children: [
+                            profileItem(Icons.person, "${ShopCubit.get(context).userData!.name}"),
+                            profileItem(Icons.email, "${ShopCubit.get(context).userData!.email}"),
+                            profileItem(Icons.phone, "${ShopCubit.get(context).userData!.phone}"),
+                          ],
+                        ),
+                      );
+              },
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 7),
@@ -88,17 +131,18 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 const Text("Do you wanna logout :(  ?"),
                 TextButton(
-                    onPressed: () {
-                      ShopCubit.get(context).logOut();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                          (route) => false);
-                      print(token);
-                    },
-                    child: const Text("Logout"))
+                  onPressed: () {
+                    ShopCubit.get(context).logOut();
+                    CachHelper.clearData(key: "token");
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                        (route) => false);
+                  },
+                  child: const Text("Logout"),
+                ),
               ],
             )
           ],
