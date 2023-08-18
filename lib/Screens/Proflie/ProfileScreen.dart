@@ -21,8 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  RegExp emailReg = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-  RegExp phoneReg = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
+
   @override
   void dispose() {
     nameController.dispose();
@@ -46,7 +45,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   const Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _scaffoldKey.currentState!.showBottomSheet(
+                        (context) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Theme.of(context).bottomSheetTheme.backgroundColor,
+                          ),
+                          child: bottomSheetItem(
+                            context: context,
+                            emailController: emailController,
+                            nameController: nameController,
+                            phoneController: phoneController,
+                          ),
+                        ),
+                      );
+                    },
                     icon: const Icon(
                       Icons.edit,
                       color: Colors.grey,

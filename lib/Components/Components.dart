@@ -296,7 +296,11 @@ Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
       ),
     );
 
-Widget profileItem(IconData icon, String text, ) => Padding(
+Widget profileItem(
+  IconData icon,
+  String text,
+) =>
+    Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
@@ -322,15 +326,21 @@ Widget profileItem(IconData icon, String text, ) => Padding(
                   maxLines: 1,
                 ),
               ),
-              
             ],
           ),
         ),
       ),
     );
-
-Widget bottomSheetItem({required context, required String text ,required TextEditingController controller, required String? Function(String?) validate , required  TextInputType type}) => Container(
-      height: 150.h,
+RegExp emailReg = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+RegExp phoneReg = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
+Widget bottomSheetItem({
+  required context,
+  required TextEditingController nameController,
+  required TextEditingController emailController,
+  required TextEditingController phoneController,
+}) =>
+    Container(
+      height: 260.h,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Theme.of(context).bottomSheetTheme.backgroundColor,
@@ -340,18 +350,60 @@ Widget bottomSheetItem({required context, required String text ,required TextEdi
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Enter your $text"),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Update your profile "),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: defaultTextFormField(
-              controller: controller,
-              type: type,
+              controller: nameController,
+              type: TextInputType.name,
               icon: const Icon(Icons.person),
-              hint: text,
-              validate: validate,
+              hint: "Name",
+              validate: (value) {
+                if (value!.isEmpty) {
+                  return "Name can't be empty";
+                } else {
+                  return null;
+                }
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: defaultTextFormField(
+              controller: emailController,
+              type: TextInputType.emailAddress,
+              icon: const Icon(Icons.email),
+              hint: "Email",
+              validate: (value) {
+                if (value!.isEmpty) {
+                  return 'Email cant be impty';
+                } else if (emailReg.hasMatch(value)) {
+                  return null;
+                } else {
+                  return "enter a vaild email";
+                }
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: defaultTextFormField(
+              controller: phoneController,
+              type: TextInputType.phone,
+              icon: const Icon(Icons.phone),
+              hint: "Phone",
+              validate: (value) {
+                if (value!.isEmpty) {
+                  return "please enter your phone";
+                } else if (phoneReg.hasMatch(value)) {
+                  return null;
+                } else {
+                  return "enter a vaild phone number";
+                }
+              },
             ),
           ),
           Row(
