@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/Models/CategoriesModel.dart';
 import 'package:shop_app/Models/FavoritsModel.dart';
 import 'package:shop_app/Models/HomeModel.dart';
+import 'package:shop_app/Models/SearchModel.dart';
 import 'package:shop_app/Models/onboardingModel.dart';
 import 'package:shop_app/cubit/shop_cubit.dart';
 
@@ -36,9 +37,11 @@ Widget defaultTextFormField({
   required String? Function(String?) validate,
   void Function()? sufBut,
   IconData? sufIcon,
+  void Function(String)? onSubmit,
 }) =>
     SizedBox(
       child: TextFormField(
+        onFieldSubmitted: onSubmit,
         validator: validate,
         obscureText: scure,
         obscuringCharacter: "*",
@@ -52,6 +55,12 @@ Widget defaultTextFormField({
           suffixIcon: IconButton(icon: Icon(sufIcon), onPressed: sufBut),
           hintText: hint,
           border: const OutlineInputBorder(),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2.0,
+            ),
+          ),
         ),
       ),
     );
@@ -443,6 +452,60 @@ Widget bottomSheetItem({
                     ),
                   ),
                 ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+Widget searchListItem(SearchModel model, int index, context) => Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.cyan[300]!.withOpacity(0.20),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image(
+                  height: 100.h,
+                  width: 100.w,
+                  image: NetworkImage(
+                    '${model.data!.data![index].image}',
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${model.data!.data![index].name}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  Text("${model.data!.data![index].price}"),
+                ],
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                ShopCubit.get(context).deleteProductFromFavorits(index);
+                ShopCubit.get(context).getHomeData();
+                model.data!.data!.removeAt(index);
+                ShopCubit.get(context).getFavoritsData();
+              },
+              icon: const Icon(
+                Icons.favorite,
+                color: Colors.red,
+                size: 30,
               ),
             ),
           ],

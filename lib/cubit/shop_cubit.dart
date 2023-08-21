@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/Components/Components.dart';
@@ -250,6 +248,7 @@ class ShopCubit extends Cubit<ShopStates> {
     DioHelper.postData(endPoint: "products/search", token: token, data: {
       "text": text
     }).then((value) {
+      searchData = SearchModel.fromJson(value.data);
       emit(GetSearchSuccess());
     }).catchError((error) {
       emit(GetSearchError());

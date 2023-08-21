@@ -11,7 +11,7 @@ class DioHelper {
         receiveDataWhenStatusError: true,
         headers: {
           "Content-Type": "application/json",
-          "lang": "ar",
+          "lang": "en",
         },
       ),
     );
@@ -47,7 +47,7 @@ class DioHelper {
   }) async {
     dio!.options.headers = {
       "Content-Type": "application/json",
-      "lang": "ar",
+      "lang": "en",
       "Authorization": token
     };
     return await dio!.get(endPoint);
@@ -60,7 +60,7 @@ class DioHelper {
   }) async {
     dio!.options.headers = {
       "Content-Type": "application/json",
-      "lang": "ar",
+      "lang": "en",
       "Authorization": token
     };
     return await dio!.post(endPoint, data: data);
@@ -69,7 +69,7 @@ class DioHelper {
   static putData({required String? token , required String endPoint , required Map data}) async {
     dio!.options.headers = {
       "Content-Type": "application/json",
-      "lang": "ar",
+      "lang": "en",
       "Authorization": token,
     };
     return await dio!.put(endPoint , data: data );

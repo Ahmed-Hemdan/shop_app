@@ -7,13 +7,9 @@ class SearchModel {
   SearchModel({this.status, this.message, this.data});
 
   SearchModel.fromJson(Map<String, dynamic> json) {
-    if(json["status"] is bool) {
-      status = json["status"];
-    }
+    status = json["status"];
     message = json["message"];
-    if(json["data"] is Map) {
-      data = json["data"] == null ? null : Data.fromJson(json["data"]);
-    }
+    data = json["data"] == null ? null : Data.fromJson(json["data"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -44,38 +40,18 @@ class Data {
   Data({this.currentPage, this.data, this.firstPageUrl, this.from, this.lastPage, this.lastPageUrl, this.nextPageUrl, this.path, this.perPage, this.prevPageUrl, this.to, this.total});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if(json["current_page"] is int) {
-      currentPage = json["current_page"];
-    }
-    if(json["data"] is List) {
-      data = json["data"] == null ? null : (json["data"] as List).map((e) => Data1.fromJson(e)).toList();
-    }
-    if(json["first_page_url"] is String) {
-      firstPageUrl = json["first_page_url"];
-    }
-    if(json["from"] is int) {
-      from = json["from"];
-    }
-    if(json["last_page"] is int) {
-      lastPage = json["last_page"];
-    }
-    if(json["last_page_url"] is String) {
-      lastPageUrl = json["last_page_url"];
-    }
+    currentPage = json["current_page"];
+    data = json["data"] == null ? null : (json["data"] as List).map((e) => Data1.fromJson(e)).toList();
+    firstPageUrl = json["first_page_url"];
+    from = json["from"];
+    lastPage = json["last_page"];
+    lastPageUrl = json["last_page_url"];
     nextPageUrl = json["next_page_url"];
-    if(json["path"] is String) {
-      path = json["path"];
-    }
-    if(json["per_page"] is int) {
-      perPage = json["per_page"];
-    }
+    path = json["path"];
+    perPage = json["per_page"];
     prevPageUrl = json["prev_page_url"];
-    if(json["to"] is int) {
-      to = json["to"];
-    }
-    if(json["total"] is int) {
-      total = json["total"];
-    }
+    to = json["to"];
+    total = json["total"];
   }
 
   Map<String, dynamic> toJson() {
@@ -111,30 +87,14 @@ class Data1 {
   Data1({this.id, this.price, this.image, this.name, this.description, this.images, this.inFavorites, this.inCart});
 
   Data1.fromJson(Map<String, dynamic> json) {
-    if(json["id"] is int) {
-      id = json["id"];
-    }
-    if(json["price"] is double) {
-      price = json["price"];
-    }
-    if(json["image"] is String) {
-      image = json["image"];
-    }
-    if(json["name"] is String) {
-      name = json["name"];
-    }
-    if(json["description"] is String) {
-      description = json["description"];
-    }
-    if(json["images"] is List) {
-      images = json["images"] == null ? null : List<String>.from(json["images"]);
-    }
-    if(json["in_favorites"] is bool) {
-      inFavorites = json["in_favorites"];
-    }
-    if(json["in_cart"] is bool) {
-      inCart = json["in_cart"];
-    }
+    id = json["id"];
+    price = json["price"].toDouble();
+    image = json["image"];
+    name = json["name"];
+    description = json["description"];
+    images = json["images"] == null ? null : List<String>.from(json["images"]);
+    inFavorites = json["in_favorites"];
+    inCart = json["in_cart"];
   }
 
   Map<String, dynamic> toJson() {
