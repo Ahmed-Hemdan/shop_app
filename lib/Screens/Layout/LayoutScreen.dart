@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/Screens/Search/SearchScreen.dart';
 
 import 'package:shop_app/cubit/shop_cubit.dart';
-
 
 class LayoutScreen extends StatelessWidget {
   const LayoutScreen({super.key});
@@ -29,10 +29,15 @@ class LayoutScreen extends StatelessWidget {
             actions: [
               IconButton(
                   onPressed: () {
-                    ShopCubit.get(context).switchTheme();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchScreen(),
+                      ),
+                    );
                   },
                   icon: const Icon(
-                    Icons.brightness_6_outlined,
+                    Icons.search,
                     color: Colors.grey,
                   ))
             ],
