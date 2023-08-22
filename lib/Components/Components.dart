@@ -495,19 +495,6 @@ Widget searchListItem(SearchModel model, int index, context) => Padding(
                 ],
               ),
             ),
-            IconButton(
-              onPressed: () {
-                ShopCubit.get(context).deleteProductFromFavorits(index);
-                ShopCubit.get(context).getHomeData();
-                model.data!.data!.removeAt(index);
-                ShopCubit.get(context).getFavoritsData();
-              },
-              icon: const Icon(
-                Icons.favorite,
-                color: Colors.red,
-                size: 30,
-              ),
-            ),
           ],
         ),
       ),
