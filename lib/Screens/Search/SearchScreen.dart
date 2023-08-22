@@ -14,6 +14,12 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = TextEditingController();
   @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -27,7 +33,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   height: 20.h,
                 ),
                 defaultTextFormField(
-                  
                     controller: searchController,
                     type: TextInputType.text,
                     icon: const Icon(Icons.search),
@@ -38,6 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       else {
                         null;
                       }
+                      return null;
                     },
                     onSubmit: (text) {
                       ShopCubit.get(context).getSearch(text);

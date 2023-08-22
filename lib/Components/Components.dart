@@ -292,7 +292,6 @@ Widget favoritsListItem(FavoritsModel model, int index, context) => Padding(
                 ShopCubit.get(context).deleteProductFromFavorits(index);
                 ShopCubit.get(context).getHomeData();
                 model.data!.data!.removeAt(index);
-                ShopCubit.get(context).getFavoritsData();
               },
               icon: const Icon(
                 Icons.favorite,

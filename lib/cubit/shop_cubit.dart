@@ -196,7 +196,10 @@ class ShopCubit extends Cubit<ShopStates> {
       data: {
         "product_id": "${favoritsData!.data!.data![index].product!.id}"
       },
-    ).then((value) => emit(DeleteProductFromFavoritsSuccess())).catchError((error) {
+    ).then((value) {
+      getFavoritsData();
+      emit(DeleteProductFromFavoritsSuccess());
+    }).catchError((error) {
       emit(DeleteProductFromFavoritsError());
     });
   }
