@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shop_app/Components/Components.dart';
 import 'package:shop_app/DioHelper/DioHelper.dart';
 import 'package:shop_app/Global/Global.dart';
@@ -255,6 +259,24 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(GetSearchSuccess());
     }).catchError((error) {
       emit(GetSearchError());
+    });
+  }
+
+  late File image;
+
+  void sendImageForApi({
+    required String name,
+    required String phone,
+    required String email,
+  }) async {
+    final myFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    image = File(myFile!.path);
+    String base64 = base64Encode(image.readAsBytesSync());
+    DioHelper.putData(token: token, endPoint: "update-profile", data: {
+      "name": name,
+      "phone": phone,
+      "email": email,
+      "image": base64,
     });
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  final GlobalKey _formKey =  GlobalKey<FormState>();
+  final GlobalKey _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -48,13 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   IconButton(
                     onPressed: () {
                       _scaffoldKey.currentState!.showBottomSheet(
-                        (context) => bottomSheetItem(
-                          context: context,
-                          emailController: emailController,
-                          nameController: nameController,
-                          phoneController: phoneController,
-                          formKey: _formKey
-                        ),
+                        (context) => bottomSheetItem(context: context, emailController: emailController, nameController: nameController, phoneController: phoneController, formKey: _formKey),
                       );
                     },
                     icon: const Icon(
@@ -67,13 +62,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Stack(
               children: [
-                SizedBox(
-                  width: 130.h,
-                  height: 130.h,
-                  child: ClipOval(
-                    child: Image.asset('assets/images/profile.jpg'),
+                if (ShopCubit.get(context).userData!.image == "https://student.valuxapps.com/storage/uploads/users/6uO4yppyJt_1692787396.jpeg")
+                  SizedBox(
+                    width: 130.h,
+                    height: 130.h,
+                    child: ClipOval(
+                      child: Image(image: NetworkImage("${ShopCubit.get(context).userData!.image}")),
+                    ),
+                  )
+                else
+                  SizedBox(
+                    width: 130.h,
+                    height: 130.h,
+                    child: ClipOval(
+                      child: Image.memory(base64Decode(ShopCubit.get(context).userData!.image!)),
+                    ),
                   ),
-                ),
                 Positioned(
                   right: 10,
                   bottom: 0,
@@ -85,7 +89,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: Colors.cyan[300],
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        ShopCubit.get(context).sendImageForApi(
+                          name: ShopCubit.get(context).userData!.name!,
+                          phone: ShopCubit.get(context).userData!.phone!,
+                          email: ShopCubit.get(context).userData!.email!,
+                        );
+                      },
                       icon: const Icon(Icons.add_photo_alternate),
                     ),
                   ),
